@@ -9,27 +9,23 @@ services:
       POSTGRES_DB: mydb
     volumes:
       - db-data:/var/lib/postgresql/data
-    networks:
-      - backend
+    expose:
+      - 5432   
 
   flask:
     build: .
     depends_on:
       - db
+    links:
+      - db
+    restart: always
     entrypoint: "/app/app_entry.sh"
-    # ports:
-    #   - target: 5000
-    #     published: 8082
-    #     protocol: tcp
-    #     mode: host
-    expose:
-      - 5000
-    networks:
-      - backend
-      - frontend
-      
-networks:
-  frontend:
-  backend:
+    ports:
+      - "8082:5000/tcp"
+    environment:
+      SERVER_NAME: "0.0.0.0:5000"
+      SQLALCHEMY_DATABASE_URI: "postgresql://myuser:mypassword@db/mydb"
+      SENTRY_SDK_URL: "https://6131a5ccb61e4f92925df624da0285ca@sentry.io/1410868"
+
 volumes:
   db-data:
