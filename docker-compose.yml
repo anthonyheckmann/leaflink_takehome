@@ -1,0 +1,35 @@
+version: "3.2"
+services:
+  db:
+    image: postgres:alpine
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: mypassword
+      POSTGRES_USER: myuser
+      POSTGRES_DB: mydb
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    networks:
+      - backend
+
+  flask:
+    build: .
+    depends_on:
+      - db
+    entrypoint: "/app/app_entry.sh"
+    # ports:
+    #   - target: 5000
+    #     published: 8082
+    #     protocol: tcp
+    #     mode: host
+    expose:
+      - 5000
+    networks:
+      - backend
+      - frontend
+      
+networks:
+  frontend:
+  backend:
+volumes:
+  db-data:
