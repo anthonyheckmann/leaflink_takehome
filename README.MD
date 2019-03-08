@@ -22,4 +22,4 @@
 ### **TL;DR;** try running *docker-compose* with *sudo*
 * Depending on your system, docker may be unhappy about forwarding port 8082. Try running the `docker-compose` command as *root*, or as `sudo docker-compose`
 * Similarly, docker my complain about mounted volumes, again try running as *root* or prefix `sudo`
-* Also, docker may complain about insufficient access to the docker server or daemon. The solution
+* Also, docker may complain about insufficient access to the docker server or daemon. Again, try running `docker-compose` as *root*, or with `sudo`
